@@ -3,7 +3,7 @@ import TransactionItem from './TransactionItem';
 
 const categories = ["food", "housing", "utilities", "transport", "entertainment", "salary", "other"];
 
-function TransactionList({ transactions }) {
+function TransactionList({ transactions, onDelete }) {
   const [filterType, setFilterType] = useState("all");
   const [filterCategory, setFilterCategory] = useState("all");
 
@@ -38,11 +38,12 @@ function TransactionList({ transactions }) {
             <th>Description</th>
             <th>Category</th>
             <th>Amount</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {filtered.map(t => (
-            <TransactionItem key={t.id} transaction={t} />
+            <TransactionItem key={t.id} transaction={t} onDelete={onDelete} />
           ))}
         </tbody>
       </table>

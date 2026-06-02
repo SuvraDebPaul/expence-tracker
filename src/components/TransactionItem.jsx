@@ -1,4 +1,4 @@
-function TransactionItem({ transaction: t }) {
+function TransactionItem({ transaction: t, onDelete }) {
   return (
     <tr>
       <td>{t.date}</td>
@@ -6,6 +6,9 @@ function TransactionItem({ transaction: t }) {
       <td>{t.category}</td>
       <td className={t.type === "income" ? "income-amount" : "expense-amount"}>
         {t.type === "income" ? "+" : "-"}${t.amount}
+      </td>
+      <td>
+        <button className="delete-btn" onClick={() => window.confirm(`Delete "${t.description}"?`) && onDelete(t.id)}>Delete</button>
       </td>
     </tr>
   );
