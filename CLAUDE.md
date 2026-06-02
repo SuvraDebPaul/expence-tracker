@@ -14,10 +14,22 @@ npm run preview  # preview production build
 
 ## Architecture
 
-This is a single-component React app (Vite + React 19). All state and logic lives in `src/App.jsx` — there are no child components, no routing, no state management library, and no backend.
+This is a React app (Vite + React 19) split into focused components. `src/App.jsx` holds the top-level transaction state and renders the page layout — all UI logic lives in `src/components/`.
+
+**Component structure:**
+```
+src/
+├── App.jsx                          — transaction state, handleAdd, top-level layout
+└── components/
+    ├── Summary.jsx                  — computes totalIncome/totalExpenses/balance, renders cards
+    ├── AddTransactionForm.jsx       — form state (description, amount, type, category) + submit
+    ├── TransactionList.jsx          — filter state + filtered table
+    └── TransactionItem.jsx          — single table row
+```
+
+There is no routing, no state management library, and no backend.
 
 **Known intentional issues (part of the course):**
-- Bug: `amount` is stored as a string in state, so `reduce` concatenates instead of summing — the Income/Expenses/Balance totals are wrong.
 - Transaction #4 ("Freelance Work") is typed `"expense"` but categorized as `"salary"`.
 - No delete functionality despite `.delete-btn` CSS being defined in `App.css`.
 - UI styling is minimal/rough by design.
@@ -27,7 +39,7 @@ This is a single-component React app (Vite + React 19). All state and logic live
 { id, description, amount, type, category, date }
 // type: "income" | "expense"
 // category: "food" | "housing" | "utilities" | "transport" | "entertainment" | "salary" | "other"
-// amount: stored as string (the bug), should be Number
+// amount: Number
 ```
 
 All state is in-memory only — no persistence across page reloads.
